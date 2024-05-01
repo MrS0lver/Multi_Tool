@@ -5,6 +5,15 @@ import speech_recognition as sr
 import pyttsx3 as pt
 import webbrowser as wb
 import qrcode as qr
+from PIL import Image, ImageTk
+
+
+
+
+
+
+
+
 class Main:
     def __init__(self, root):
         self.root = root
@@ -37,18 +46,31 @@ class Qrcode:
         self.qrcode.title("Qrcode Generator")
         self.qrcode.geometry("500x500")
 
+        self.see = Label(self.qrcode, text="Paste Your Text or Link Here:", font = "Dungeon 20")
+        self.see.pack(fill= BOTH, side = TOP, pady = 10)
+
         self.link = Entry(self.qrcode, font="consolas 16")
-        self.link.pack()
+        self.link.pack(fill = BOTH)
+
+        self.generate = Button(self.qrcode , text="Generate", font="Dungeon 16", command=self.generate)
+        self.generate.pack()
+
+        self.show = Label(self.qrcode)
+        self.show.pack(pady=10)
+
+        self.last = Label(self.qrcode)
+        self.last.pack()
 
 
-
-
-
-
-
-
-
-
+    def generate(self):
+        qro = qr.make(self.link.get())
+        image_path = "CustomQR.png"
+        qro.save(image_path)
+        image = Image.open(image_path)
+        photo = ImageTk.PhotoImage(image)
+        self.show.config(image=photo)
+        self.show.image = photo  #avoid garbage collection
+        self.last.config(text="QRcode is Generated Sucessfully !\n Your Generated Image is Saved in your Working Directory with the name CustomQR.png")
 
         self.qrcode.protocol("WM_DELETE_WINDOW",self.reopen)
     def open(self):
