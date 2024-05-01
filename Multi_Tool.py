@@ -4,7 +4,7 @@ from tkinter import filedialog,font
 import speech_recognition as sr
 import pyttsx3 as pt
 import webbrowser as wb
-
+import qrcode as qr
 class Main:
     def __init__(self, root):
         self.root = root
@@ -26,28 +26,21 @@ class Main:
 
     def open_qrcode(self):
         self.root.destroy()
-        qrcode_window = Qrcode(self.root)
+        qrcode_window = Qrcode()
         qrcode_window.open()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 class Qrcode:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self):
         self.qrcode = Tk() # Create a Toplevel window for QR code
         self.qrcode.title("Qrcode Generator")
         self.qrcode.geometry("500x500")
+
+        self.link = Entry(self.qrcode, font="consolas 16")
+        self.link.pack()
+
+
 
 
 
