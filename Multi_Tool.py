@@ -22,11 +22,14 @@ class Main:
 
 
 
-        self.qrcode_button = Button(self.root, text="Qrcode", font="consolas 16", command=self.open_qrcode)
+        self.qrcode_button = Button(self.root, text="Qrcode", font="Dungeon 16", command=self.open_qrcode)
         self.qrcode_button.pack(fill=BOTH, side=TOP, pady=10)
 
-        self.notepad_button = Button(self.root, text="Smart Notepad", font="consolas 16", command=self.open_notepad)
+        self.notepad_button = Button(self.root, text="Smart Notepad", font="Dungeon 16", command=self.open_notepad)
         self.notepad_button.pack(fill=BOTH, side = TOP, pady = 10)
+
+        self.spell = Button(self.root, text="Spell Corrector",font="Dungeon 16",command=self.open_spell)
+        self.spell.pack(fill=BOTH, side=TOP,pady=10)
     
     def open_notepad(self):
         self.root.destroy()
@@ -38,6 +41,50 @@ class Main:
         qrcode_window = Qrcode()
         qrcode_window.open()
 
+    def open_spell(self):
+        self.root.destroy()
+        spell = Spell()
+        spell.open()
+
+
+class Spell:
+    def __init__(self):
+        self.spell = Tk()
+        self.spell.geometry("500x500")
+        self.spell.title("Spell Corrector")
+
+        self.label = Label(self.spell, text="Type your sentence/spelling here: ",font="Dungeon 17")
+        self.label.pack(pady=5,fill=BOTH,side=TOP)
+        self.text = Entry(self.spell, font = "consolas 20",bd=0)
+        self.text.pack()
+        self.button = Button(self.spell, text="Correct", font = "sonsolas 20")
+        self.button.pack()
+        self.label2 = Label(self.spell, font = "Dungeon 17")
+        self.label2.pack(pady=5,fill=BOTH)
+
+
+        def correction(self):
+            pass
+
+
+
+
+
+
+
+
+
+        self.spell.protocol("WM_DELETE_WINDOW",self.reopen)
+
+    
+    def open(self):
+        self.spell.mainloop()
+    
+    def reopen(self):
+        self.root = Tk()
+        self.root.geometry("500x500")
+        self.spell.destroy()
+        obj = Main(self.root)
 
 
 class Qrcode:
@@ -60,6 +107,7 @@ class Qrcode:
 
         self.last = Label(self.qrcode)
         self.last.pack()
+        self.qrcode.protocol("WM_DELETE_WINDOW",self.reopen)
 
 
     def generate(self):
@@ -72,7 +120,6 @@ class Qrcode:
         self.show.image = photo  #avoid garbage collection
         self.last.config(text="QRcode is Generated Sucessfully !\n Your Generated Image is Saved in your Working Directory with the name CustomQR.png")
 
-        self.qrcode.protocol("WM_DELETE_WINDOW",self.reopen)
     def open(self):
         self.qrcode.mainloop()
     def reopen(self):
